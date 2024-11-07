@@ -1,63 +1,74 @@
 import React, { useState } from 'react';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
+import './Auth.css'; // Use the shared CSS for Login and Register
 
 function Register() {
   const [username, setUsername] = useState('');
-  const [password, setPassword] = useState('');
   const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
   const [successMessage, setSuccessMessage] = useState('');
-  const navigate = useNavigate(); // for navigation
+  const [errorMessage, setErrorMessage] = useState('');
+  const navigate = useNavigate();
 
   const handleRegister = (e) => {
     e.preventDefault();
-    
-    // Call your Flask API to register the user
-    axios.post('http://127.0.0.1:5000/api/register', { username, password, email })
+    setErrorMessage('');
+    setSuccessMessage('');
+
+    axios.post('http://127.0.0.1:5000/api/register', { username, email, password })
       .then(response => {
-        // Handle successful registration
-        console.log('Registration successful:', response.data);
         setSuccessMessage('You have successfully registered! Redirecting to login...');
-        
-        // Wait 3 seconds, then navigate to login page
         setTimeout(() => {
-          navigate('/'); // Redirect to login page
-        }, 3000); // 3 seconds delay
+          navigate('/'); // Redirect to login page after 3 seconds
+        }, 3000);
       })
       .catch(error => {
-        console.error('There was an error registering!', error);
+        if (error.response) {
+          setErrorMessage(error.response.data.message);
+        } else {
+          setErrorMessage('An error occurred. Please try again.');
+        }
       });
   };
 
   return (
-    <div>
-      <h1>Register</h1>
-      {successMessage && <p style={{ color: 'green' }}>{successMessage}</p>} {/* Show success message */}
-      
-      <form onSubmit={handleRegister}>
-        <input
-          type="text"
-          value={username}
-          onChange={(e) => setUsername(e.target.value)}
-          placeholder="Username"
-          required
-        />
-        <input
-          type="email"
-          value={email}
-          onChange={(e) => setEmail(e.target.value)}
-          placeholder="Email"
-          required
-        />
-        <input
-          type="password"
-          value={password}
-          onChange={(e) => setPassword(e.target.value)}
-          placeholder="Password"
-          required
-        />
-        <button type="submit">Register</button>
-      </form>
+    <div className="auth-container">
+      <div className="auth-image">
+        {/* Image section */}
+        <img src="path_to_workout_image.jpg" alt="Workout" />
+      </div>
+      <div className="auth-form">
+        <h1>Register</h1>
+        {successMessage && <p style={{ color: 'green' }}>{successMessage}</p>}
+        {errorMessage && <p style={{ color: 'red' }}>{errorMessage}</p>}
+        
+        <form onSubmit={handleRegister}>
+          <input
+            type="text"
+            value={username}
+            onChange={(e) => setUsername(e.target.value)}
+            placeholder="Username"
+            required
+          />
+          <input
+            type="email"
+            value={email}
+            onChange={(e) => setEmail(e.target.value)}
+            placeholder="Email"
+            required
+          />
+          <input
+            type="password"
+            value={password}
+            onChange={(e) => setPassword(e.target.value)}
+            placeholder="Password"
+            required
+          />
+          <button type="submit">Register</button>
+        </form>
+        <p>Already have an account? <a href="/">Login here</a></p>
+      </div>
     </div>
   );
 }

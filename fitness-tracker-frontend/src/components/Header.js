@@ -1,9 +1,16 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { useAuth } from '../AuthContext';
+import './App.css';
 
 function Header() {
   const { isAuthenticated, logout } = useAuth();
+  const navigate = useNavigate();
+
+  const handleLogout = () => {
+    logout();
+    navigate('/'); 
+  };
 
   return (
     <header>
@@ -11,14 +18,14 @@ function Header() {
       <nav>
         {!isAuthenticated ? (
           <>
-            <Link to="/login">Login</Link>
+            <Link to="/">Login</Link>
             <Link to="/register">Register</Link>
           </>
         ) : (
           <>
             <Link to="/dashboard">Dashboard</Link>
             <Link to="/profile">Profile</Link>
-            <button onClick={logout}>Logout</button>
+            <button onClick={handleLogout}>Logout</button>
           </>
         )}
       </nav>
