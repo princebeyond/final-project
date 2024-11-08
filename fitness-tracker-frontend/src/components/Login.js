@@ -35,7 +35,7 @@ function Login() {
     <div className="auth-container">
       <div className="auth-image">
         {/* Image section */}
-        <img src="C:\Users\amood\Downloads\rest-day-cardio-workout-sundried.webp" alt="Workout" />
+        <img src="https://raw.githubusercontent.com/princebeyond/final-project/refs/heads/master/fitness-tracker-frontend/src/workout.webp" alt="Workout" />
       </div>
       <div className="auth-form">
         <h1>Login</h1>

@@ -36,7 +36,7 @@ function Register() {
     <div className="auth-container">
       <div className="auth-image">
         {/* Image section */}
-        <img src="path_to_workout_image.jpg" alt="Workout" />
+        <img src="https://raw.githubusercontent.com/princebeyond/final-project/refs/heads/master/fitness-tracker-frontend/src/workout.webp" alt="Workout" />
       </div>
       <div className="auth-form">
         <h1>Register</h1>
